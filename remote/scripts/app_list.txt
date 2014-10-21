@@ -1,0 +1,6 @@
+octopus3-admin-app.jar start_admin.sh
+octopus3-amazon-flow-service-app.jar start_amazon_flow.sh
+octopus3-cadc-source-service-app.jar start_cadc_source.sh
+octopus3-flixmedia-flow-service-app.jar start_flixmedia_flow.sh
+octopus3-product-generation-service-app.jar start_product_generation.sh
+octopus3-repository-service-app.jar start_repository.sh
