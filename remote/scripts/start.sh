@@ -2,7 +2,7 @@
 
 ####
 #
-# Example usage: ./start.sh -p 9091 -j octopus3-repository-service-1.0-SNAPSHOT-fat.jar
+# Example usage: ./start.sh -p 9091 -j octopus3-repository-service-app.jar
 #
 ####
 

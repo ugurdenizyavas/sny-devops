@@ -4,6 +4,11 @@ LOG_FILE="${SCRIPTS_FOLDER}logs/`hostname`_deploy.log"
 APPS_LIST_FILE="/opt/shared/scripts/app_list.txt"
 APPS_DIR="/opt/shared/to_deploy/"
 
+if [ -z "$1" ]; then
+    echo "[ABORTED] Environment [dev, testqa, production] should be given as an argument"
+    return
+fi
+
 #Read application list
 while read -r line
 do
@@ -12,7 +17,7 @@ do
 	app_script=${app_line[1]}
 
 	app_file="$APPS_DIR$app_name"
-	app_script_file="$SCRIPTS_FOLDER$app_script"
+	app_script_file="$SCRIPTS_FOLDER$app_script $1"
 	if [ -f $app_file ]
 	then
 		echo "Checking new deployed file for $app_name"
