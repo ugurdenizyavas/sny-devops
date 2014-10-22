@@ -18,14 +18,16 @@ do
 
 	app_file="$APPS_DIR$app_name"
 	app_script_file="$SCRIPTS_FOLDER$app_script $1"
-	if [ -f $app_file ]
+
+	if [ -f ${app_file} ]
 	then
 		echo "Checking new deployed file for $app_name"
 		date_of_app_file=$(date +%s%N -r $app_file)
 		date_of_now=$(date +%s%N)
 		diff=$(($date_of_now- $date_of_app_file))
-		age_of_file_in_min=$(($diff / $((1000000000*60))))
+		age_of_file_in_min=$(($diff / $((60000000000))))
 		echo "Age of file: $age_of_file_in_min"
+
 		if [ $(($age_of_file_in_min - 5)) -lt 0 ]
         	then
 			echo "New deployed file found: $app_name"

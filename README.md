@@ -18,3 +18,10 @@ There exist 4 branches
 * **env/dev**: what you merge here goes to dev environment
 * **env/tqa**: what you merge here goes to tqa environment
 * **env/prd**: what you merge here goes to prd environment
+
+RELEASE PROCEDURE
+=================
+
+1) Make your changes in master branch
+2) Merge the changes to related environment branch when completed
+3) Check bamboo to see if it deploys successfully
