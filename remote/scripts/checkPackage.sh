@@ -1,7 +1,7 @@
 #!/bin/bash
-SCRIPTS_FOLDER="/opt/shared/scripts/"
+SCRIPTS_FOLDER="/opt/shared/devops/scripts/"
 LOG_FILE="${SCRIPTS_FOLDER}logs/`hostname`_deploy.log"
-APPS_LIST_FILE="/opt/shared/scripts/app_list.txt"
+APPS_LIST_FILE="/opt/shared/devops/scripts/app_list.txt"
 APPS_DIR="/opt/shared/to_deploy/"
 
 if [ -z "$1" ]; then
