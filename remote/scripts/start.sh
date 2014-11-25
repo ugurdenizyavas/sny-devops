@@ -13,7 +13,6 @@ usage() {
     start.sh
     [-p || --port <port>]
     [-j || --jar <jar name>]
-    [-e || --env <environment>]
     [-l || --logDirectory <log directory>]
     [-n || --name <name of server>]
     [-x || --extras <extra optional parameters>]
@@ -21,11 +20,18 @@ usage() {
     exit 1
 }
 
+BEESPDESXAPP76=dev
+BEESPDESXAPP77=dev
+BEESPTESXAPP106=testqa
+BEESPTESXAPP107=testqa
+BEESPPESXAPP219=production
+BEESPPESXAPP220=production
+
 now=$(date +"%Y%m%d_%H%M")
 port=
 jar=
 logDirectory=
-environment=
+environment=$(`hostname`)
 name=
 extras=
 JVM_ARGS="-server -Djava.net.preferIPv4Stack=true -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+AlwaysPreTouch -XX:ThreadStackSize=4096 -Xmx512m -Xms256m"
@@ -39,10 +45,6 @@ while [ $# -gt 0 ]; do
         ;;
         -p | --port)
             port=$2
-            shift
-        ;;
-        -e | --env)
-            environment=$2
             shift
         ;;
         -l | --logDirectory)
