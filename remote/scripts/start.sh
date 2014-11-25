@@ -16,6 +16,7 @@ usage() {
     [-e || --env <environment>]
     [-l || --logDirectory <log directory>]
     [-n || --name <name of server>]
+    [-x || --extras <extra optional parameters>]
     "
     exit 1
 }
@@ -26,6 +27,7 @@ jar=
 logDirectory=
 environment=
 name=
+extras=
 JVM_ARGS="-server -Djava.net.preferIPv4Stack=true -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+AlwaysPreTouch -XX:ThreadStackSize=4096 -Xmx512m -Xms256m"
 
 realargs="$@"
@@ -49,6 +51,10 @@ while [ $# -gt 0 ]; do
         ;;
         -n | --name)
             name=$2
+            shift
+        ;;
+        -x | --extras)
+            extras=$2
             shift
         ;;
         *)
@@ -93,7 +99,7 @@ rm -Rf $logDirectory/*
 echo "[CLEAN] Cleaned log folder $logDirectory"
 
 mkdir -p "$logDirectory"
-cmd="nohup /opt/java/bin/java $JVM_ARGS -Dratpack.port=$port -DlogDirectory=$logDirectory -Denvironment=$environment  -Dlogback.configurationFile=/opt/shared/configuration/logs/${name}.groovy -Dname=$name -jar /opt/shared/to_deploy/$jar > $logDirectory/stdout.log 2>&1&"
+cmd="nohup /opt/java/bin/java $JVM_ARGS -Dratpack.port=$port -DlogDirectory=$logDirectory -Denvironment=$environment  -Dlogback.configurationFile=/opt/shared/configuration/logs/${name}.groovy -Dname=$name ${extras} -jar /opt/shared/to_deploy/$jar > $logDirectory/stdout.log 2>&1&"
 echo "[START  ] Service is starting with command [ $cmd ]"
 bash -c "$cmd"
 sleep 10
