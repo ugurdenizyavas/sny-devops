@@ -31,7 +31,8 @@ now=$(date +"%Y%m%d_%H%M")
 port=
 jar=
 logDirectory=
-environment=$(`hostname`)
+hostname=`hostname`
+environment="${!hostname}"
 name=
 extras=
 JVM_ARGS="-server -Djava.net.preferIPv4Stack=true -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+AlwaysPreTouch -XX:ThreadStackSize=4096 -Xmx512m -Xms256m"
