@@ -1,5 +1,5 @@
 #!/bin/bash
-WORKING_DIR="/opt/shared/scripts"
+WORKING_DIR="/opt/shared/devops/scripts"
 TEMP_DIR="/opt/shared/repository/temp/amazon_feed"
 
 rm -rf ${TEMP_DIR}
