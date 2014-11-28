@@ -102,7 +102,7 @@ rm -Rf $logDirectory/*
 echo "[CLEAN] Cleaned log folder $logDirectory"
 
 mkdir -p "$logDirectory"
-cmd="nohup /opt/java/bin/java $JVM_ARGS -Dratpack.port=$port -DlogDirectory=$logDirectory -Denvironment=$environment  -Dlogback.configurationFile=/opt/shared/configuration/logs/${name}.groovy -Dname=$name ${extras} -jar /opt/shared/to_deploy/$jar > $logDirectory/stdout.log 2>&1&"
+cmd="nohup /opt/java/bin/java $JVM_ARGS -Dratpack.port=$port -DlogDirectory=$logDirectory -Denvironment=$environment  -Dlogback.configurationFile=/opt/shared/devops/configuration/logs/${name}.groovy -Dname=$name ${extras} -jar /opt/shared/to_deploy/$jar > $logDirectory/stdout.log 2>&1&"
 echo "[START  ] Service is starting with command [ $cmd ]"
 bash -c "$cmd"
 sleep 10
