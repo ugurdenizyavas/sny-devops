@@ -26,6 +26,7 @@ jar=
 logDirectory=
 environment=
 name=
+jvm=
 JVM_ARGS="-server -Djava.net.preferIPv4Stack=true -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+AlwaysPreTouch -XX:ThreadStackSize=4096 -Xmx512m -Xms256m"
 
 realargs="$@"
@@ -51,6 +52,10 @@ while [ $# -gt 0 ]; do
             name=$2
             shift
         ;;
+        -x | --jvm)
+            jvm=$2
+            shift
+        ;;
         *)
             usage
         ;;
@@ -62,6 +67,10 @@ set -- $realargs
 echo "==============================="
 echo "START"
 echo "==============================="
+
+if [ -z "$jvm" ]; then
+    jvm=${JVM_ARGS}
+fi
 
 if [ -z "$jar" ] || [ -z "$port" ] || [ -z "$logDirectory" ] || [ -z "$environment" ] || [ -z "$name" ]; then
     echo "[ABORTED] Mandatory fields are missing. Please check the usage."
@@ -93,7 +102,7 @@ rm -Rf $logDirectory/*
 echo "[CLEAN] Cleaned log folder $logDirectory"
 
 mkdir -p "$logDirectory"
-cmd="nohup /opt/java/bin/java $JVM_ARGS -Dratpack.port=$port -DlogDirectory=$logDirectory -Denvironment=$environment  -Dlogback.configurationFile=/opt/shared/devops/configuration/logs/${name}.groovy -Dname=$name ${extras} -jar /opt/shared/to_deploy/$jar > $logDirectory/stdout.log 2>&1&"
+cmd="nohup /opt/java/bin/java $jvm -Dratpack.port=$port -DlogDirectory=$logDirectory -Denvironment=$environment  -Dlogback.configurationFile=/opt/shared/devops/configuration/logs/${name}.groovy -Dname=$name ${extras} -jar /opt/shared/to_deploy/$jar > $logDirectory/stdout.log 2>&1&"
 echo "[START  ] Service is starting with command [ $cmd ]"
 bash -c "$cmd"
 sleep 10
