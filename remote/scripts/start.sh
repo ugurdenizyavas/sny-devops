@@ -34,7 +34,9 @@ logDirectory=
 hostname=`hostname`
 environment="${!hostname}"
 name=
-extras=
+
+# DEFAULT VALUES
+EXTRA_OPTS=
 JVM_ARGS="-server -Djava.net.preferIPv4Stack=true -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+AlwaysPreTouch -XX:ThreadStackSize=4096 -Xmx512m -Xms256m"
 
 realargs="$@"
@@ -56,10 +58,6 @@ while [ $# -gt 0 ]; do
             name=$2
             shift
         ;;
-        -x | --extras)
-            extras=$2
-            shift
-        ;;
         *)
             usage
         ;;
@@ -67,6 +65,12 @@ while [ $# -gt 0 ]; do
     shift
 done
 set -- $realargs
+
+propertyFile="./properties/${environment}-${name}.properties"
+if [ -f "$propertyFile" ]; then
+    echo "Overriding defaults by $propertyFile"
+    source "$propertyFile"
+fi
 
 echo "==============================="
 echo "START"
