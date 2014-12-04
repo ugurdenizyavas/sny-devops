@@ -58,14 +58,6 @@ while [ $# -gt 0 ]; do
             name=$2
             shift
         ;;
-        -x | --extras)
-            extras=$2
-            shift
-        ;;
-        -d | --jvm)
-            jvm=$2
-            shift
-        ;;
         *)
             usage
         ;;
@@ -84,11 +76,7 @@ echo "==============================="
 echo "START"
 echo "==============================="
 
-if [ -z "$jvm" ]; then
-    jvm=${JVM_ARGS}
-fi
-
-if [ -z "$jar" ] || [ -z "$port" ] || [ -z "$logDirectory" ] || [ -z "$name" ]; then
+if [ -z "$jar" ] || [ -z "$port" ] || [ -z "$logDirectory" ] || [ -z "$environment" ] || [ -z "$name" ]; then
     echo "[ABORTED] Mandatory fields are missing. Please check the usage."
     usage
     return
