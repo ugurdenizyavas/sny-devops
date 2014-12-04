@@ -13,19 +13,29 @@ usage() {
     start.sh
     [-p || --port <port>]
     [-j || --jar <jar name>]
-    [-e || --env <environment>]
     [-l || --logDirectory <log directory>]
     [-n || --name <name of server>]
+    [-x || --extras <extra optional parameters>]
+    [-d || --jvm <extra optional parameters>]
     "
     exit 1
 }
+
+BEESPDESXAPP76=dev
+BEESPDESXAPP77=dev
+BEESPTESXAPP106=testqa
+BEESPTESXAPP107=testqa
+BEESPPESXAPP219=production
+BEESPPESXAPP220=production
 
 now=$(date +"%Y%m%d_%H%M")
 port=
 jar=
 logDirectory=
-environment=
+hostname=`hostname`
+environment="${!hostname}"
 name=
+extras=
 jvm=
 JVM_ARGS="-server -Djava.net.preferIPv4Stack=true -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+AlwaysPreTouch -XX:ThreadStackSize=4096 -Xmx512m -Xms256m"
 
@@ -40,10 +50,6 @@ while [ $# -gt 0 ]; do
             port=$2
             shift
         ;;
-        -e | --env)
-            environment=$2
-            shift
-        ;;
         -l | --logDirectory)
             logDirectory=$2
             shift
@@ -52,7 +58,11 @@ while [ $# -gt 0 ]; do
             name=$2
             shift
         ;;
-        -x | --jvm)
+        -x | --extras)
+            extras=$2
+            shift
+        ;;
+        -d | --jvm)
             jvm=$2
             shift
         ;;
@@ -72,7 +82,7 @@ if [ -z "$jvm" ]; then
     jvm=${JVM_ARGS}
 fi
 
-if [ -z "$jar" ] || [ -z "$port" ] || [ -z "$logDirectory" ] || [ -z "$environment" ] || [ -z "$name" ]; then
+if [ -z "$jar" ] || [ -z "$port" ] || [ -z "$logDirectory" ] || [ -z "$name" ]; then
     echo "[ABORTED] Mandatory fields are missing. Please check the usage."
     usage
     return
