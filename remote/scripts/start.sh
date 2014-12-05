@@ -37,7 +37,7 @@ name=
 
 # DEFAULT VALUES
 EXTRA_OPTS=
-JVM_ARGS="-server -Djava.net.preferIPv4Stack=true -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+AlwaysPreTouch -XX:ThreadStackSize=4096 -Xmx512m -Xms256m"
+JVM_ARGS="-server -Djava.net.preferIPv4Stack=true -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+AlwaysPreTouch -XX:ThreadStackSize=4096 -Xmx512m -Xms256m -XX:+PrintGCDetails -Xloggc:${logDirectory}/gc.log -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps"
 
 realargs="$@"
 while [ $# -gt 0 ]; do
