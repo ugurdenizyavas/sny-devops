@@ -37,12 +37,6 @@ hostname=`hostname`
 environment="${!hostname}"
 name=
 
-# DEFAULT VALUES
-EXTRA_OPTS=
-
-JVM_ARGS="-server -Djava.net.preferIPv4Stack=true -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+AlwaysPreTouch -XX:ThreadStackSize=4096 -XX:+PrintGCDetails -Xloggc:${logDirectory}/gc.log -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps"
-JVM_ARGS_EXTRA="-Xmx512m -Xms256m"
-
 realargs="$@"
 while [ $# -gt 0 ]; do
     case "$1" in
@@ -73,6 +67,11 @@ while [ $# -gt 0 ]; do
     shift
 done
 set -- $realargs
+
+# DEFAULT VALUES
+EXTRA_OPTS=
+JVM_ARGS="-server -Djava.net.preferIPv4Stack=true -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+AlwaysPreTouch -XX:ThreadStackSize=4096 -XX:+PrintGCDetails -Xloggc:${logDirectory}/gc.log -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps"
+JVM_ARGS_EXTRA="-Xmx512m -Xms256m"
 
 propertyFile="${workingDirectory}/properties/${environment}-${name}.properties"
 if [ -f "$propertyFile" ]; then
