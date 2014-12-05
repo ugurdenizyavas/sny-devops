@@ -14,6 +14,7 @@ usage() {
     [-p || --port <port>]
     [-j || --jar <jar name>]
     [-l || --logDirectory <log directory>]
+    [-wd || --workingDirectory <working directory>]
     [-n || --name <name of server>]
     [-x || --extras <extra optional parameters>]
     "
@@ -31,6 +32,7 @@ now=$(date +"%Y%m%d_%H%M")
 port=
 jar=
 logDirectory=
+workingDirectory=.
 hostname=`hostname`
 environment="${!hostname}"
 name=
@@ -56,6 +58,10 @@ while [ $# -gt 0 ]; do
             logDirectory=$2
             shift
         ;;
+        -wd | --workingDirectory)
+            workingDirectory=$2
+            shift
+        ;;
         -n | --name)
             name=$2
             shift
@@ -68,7 +74,7 @@ while [ $# -gt 0 ]; do
 done
 set -- $realargs
 
-propertyFile="$WORKING_DIR/properties/${environment}-${name}.properties"
+propertyFile="${workingDirectory}/properties/${environment}-${name}.properties"
 if [ -f "$propertyFile" ]; then
     echo "Overriding defaults by $propertyFile"
     source "$propertyFile"
