@@ -37,7 +37,9 @@ name=
 
 # DEFAULT VALUES
 EXTRA_OPTS=
-JVM_ARGS="-server -Djava.net.preferIPv4Stack=true -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+AlwaysPreTouch -XX:ThreadStackSize=4096 -Xmx512m -Xms256m -XX:+PrintGCDetails -Xloggc:${logDirectory}/gc.log -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps"
+
+JVM_ARGS="-server -Djava.net.preferIPv4Stack=true -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+AlwaysPreTouch -XX:ThreadStackSize=4096 -XX:+PrintGCDetails -Xloggc:${logDirectory}/gc.log -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps"
+JVM_ARGS_EXTRA="-Xmx512m -Xms256m"
 
 realargs="$@"
 while [ $# -gt 0 ]; do
@@ -66,7 +68,7 @@ while [ $# -gt 0 ]; do
 done
 set -- $realargs
 
-propertyFile="./properties/${environment}-${name}.properties"
+propertyFile="$WORKING_DIR/properties/${environment}-${name}.properties"
 if [ -f "$propertyFile" ]; then
     echo "Overriding defaults by $propertyFile"
     source "$propertyFile"
@@ -106,7 +108,7 @@ rm -Rf $logDirectory/*
 echo "[CLEAN] Cleaned log folder $logDirectory"
 
 mkdir -p "$logDirectory"
-cmd="nohup /opt/java/bin/java $JVM_ARGS -Dratpack.port=$port -DlogDirectory=$logDirectory -Denvironment=$environment  -Dlogback.configurationFile=/opt/shared/devops/configuration/logs/${name}.groovy -Dname=$name ${EXTRA_OPTS} -jar /opt/shared/to_deploy/$jar > $logDirectory/stdout.log 2>&1&"
+cmd="nohup /opt/java/bin/java $JVM_ARGS $JVM_ARGS_EXTRA -Dratpack.port=$port -DlogDirectory=$logDirectory -Denvironment=$environment  -Dlogback.configurationFile=/opt/shared/devops/configuration/logs/${name}.groovy -Dname=$name ${EXTRA_OPTS} -jar /opt/shared/to_deploy/$jar > $logDirectory/stdout.log 2>&1&"
 echo "[START  ] Service is starting with command [ $cmd ]"
 bash -c "$cmd"
 sleep 10
